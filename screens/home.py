@@ -32,7 +32,7 @@ class HomeScreen:
 
         # تحديد الإحداثيات لتمركز الأزرار في منتصف الشاشة
         center_x = 400  # منتصف العرض (800 / 2)
-        start_y = 360   # نبدأ من هذا الموضع وننزل تدريجياً
+        start_y = 300  # نبدأ من هذا الموضع وننزل تدريجياً
 
         self.canvas.create_window(center_x, start_y, window=self.start_button, width=200, height=50)
         self.canvas.create_window(center_x, start_y + 80, window=self.about_button, width=200, height=50)
