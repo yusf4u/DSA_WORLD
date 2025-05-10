@@ -15,16 +15,18 @@ Start → Goes to Visualisation Menu
 About → Modal with app description and credits
 
 Exit → Closes the app or returns to launcher
+
 ---
-2. ### Visualisation Menu (Level Selection)
-Each Data Structure / Algorithm is a clickable level.
+
+2. ### Visualisation Menu (Option Selection)
+Each Data Structure / Algorithm is a clickable option.
 
 Style:
-Horizontal or grid-style level map
+Horizontal or grid-style option map
 
-Levels styled as floating blocks or platforms
+Options styled as floating blocks or platforms
 
-Levels:
+Options:
 Stack
 
 Queue
@@ -35,7 +37,7 @@ Linked List
 
 Hanoi Tower
 
-Each level icon includes:
+Each Option icon includes:
 
 Click sound
 
