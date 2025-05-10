@@ -1,57 +1,108 @@
 # DSA_WORLD
 ![Logo](assets/background/dsa_world_banner.png)
-1. ### Welcome / Home Screen (Game-style UI)
-- Title: e.g. “DSA World” with pixel-style font.
+1. ### Welcome / Home Screen
+Theme: Retro/pixel-style game UI (Mario-style, vibrant and playful)
 
-- Background: A cartoonish or pixel-art theme (can be Mario-style with pipes/boxes, etc.).
+UI Elements:
+Title: "DSA World" (Use pixel font like Press Start 2P)
 
-- Buttons:
+Background: Pixel-art world with data structure elements (stack, hanoi toweer)
 
-  - Start (goes to visualisation menu)
+Buttons (with click sounds):
 
-  - About (shows what the app does and who made it)
+Start → Goes to Visualisation Menu
 
-  - Exit
----
+About → Modal with app description and credits
 
-2. ### Visualisation Menu (Level Selection Style)
-Each data structure/algorithm is like a “level”:
+Exit → Closes the app or returns to launcher
 
-- Stack
+2. Visualisation Menu (Level Selection)
+Each Data Structure / Algorithm is a clickable level.
 
-- Queue
+Style:
+Horizontal or grid-style level map
 
-- Circular Queue
+Levels styled as floating blocks or platforms
 
-- Linked List
+Levels:
+Stack
 
-- Hanoi Tower
+Queue
 
+Circular Queue
 
-Each level/icon could be clickable and take the user to that simulator.
+Linked List
 
----
+Hanoi Tower
 
-3. ### Circular Queue Level (Example)
-- Visual boxes in a circle.
+Each level icon includes:
 
-- Front and Rear pointers as arrow images.
+Click sound
 
-- Buttons: Enqueue, Dequeue, Reset
+3. Circular Queue Level (Example)
+Visual:
 
-- Animated transitions with messages like “Queue is Full!”
+Circle of boxes (slots)
 
-- Maybe show code on the side with a highlighted line on each action.
+Front and Rear pointers as colorful arrows or images
 
----
+Controls:
 
-4. ### Tower of Hanoi Level
-- 3 vertical rods and draggable disks.
+Enqueue: Adds an item with animation
 
-- Manual mode: User solves it.
+Dequeue: Removes item and updates pointers
 
-- Auto mode: Recursive steps visualised with explanations.
+Reset: Clears all and resets pointers
 
----
+Random Fill: Add random front and rear in empty items
 
-5. ### Technologies / Assets
+Features:
+
+Animated transitions and alerts (e.g., "Queue is Full!")
+
+Show pseudocode or code with line-by-line highlight
+
+Sound feedback on each button click
+
+4. Tower of Hanoi Level
+Visual:
+
+3 vertical rods
+
+Colorful, draggable disks
+
+Modes:
+
+Manual: User solves puzzle using drag and drop
+
+Auto: Visualizes recursive solution step-by-step
+
+Extras:
+
+Error sound message for wrong move
+
+Win sound message if you completed
+
+Descriptive text for each move
+
+Optional speed control
+
+5. Technologies and Assets
+
+Assets:
+Pixel fonts, sprite backgrounds, retro UI elements
+
+Sound effects:
+
+Clicks
+
+Success or error tones
+
+Data Structures Included:
+Stack
+
+Queue
+
+Circular Queue
+
+Linked List
