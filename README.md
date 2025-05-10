@@ -1,5 +1,5 @@
 # DSA_WORLD
-![Logo](assets/background/home_bg.png)
+![Logo](assets/background/dsa_world_banner.png)
 1. ### Welcome / Home Screen (Game-style UI)
 - Title: e.g. “DSA World” with pixel-style font.
 
