@@ -15,8 +15,8 @@ Start → Goes to Visualisation Menu
 About → Modal with app description and credits
 
 Exit → Closes the app or returns to launcher
-
-2. Visualisation Menu (Level Selection)
+---
+2. ### Visualisation Menu (Level Selection)
 Each Data Structure / Algorithm is a clickable level.
 
 Style:
@@ -39,7 +39,9 @@ Each level icon includes:
 
 Click sound
 
-3. Circular Queue Level (Example)
+---
+
+3. ### Circular Queue Level (Example)
 Visual:
 
 Circle of boxes (slots)
@@ -64,7 +66,9 @@ Show pseudocode or code with line-by-line highlight
 
 Sound feedback on each button click
 
-4. Tower of Hanoi Level
+---
+
+4. ### Tower of Hanoi Level
 Visual:
 
 3 vertical rods
@@ -87,7 +91,9 @@ Descriptive text for each move
 
 Optional speed control
 
-5. Technologies and Assets
+---
+
+5. ### Technologies and Assets
 
 Assets:
 Pixel fonts, sprite backgrounds, retro UI elements
