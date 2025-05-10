@@ -17,15 +17,15 @@
 2. ### Visualisation Menu (Level Selection Style)
 Each data structure/algorithm is like a “level”:
 
-- Circular Queue
-
 - Stack
 
-- Tower of Hanoi
+- Queue
 
-- Sorting Land (Bubble, Insertion, etc.)
+- Circular Queue
 
-- Linked List Cave, etc.
+- Linked List
+
+- Hanoi Tower
 
 
 Each level/icon could be clickable and take the user to that simulator.
