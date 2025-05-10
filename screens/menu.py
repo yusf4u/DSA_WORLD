@@ -3,6 +3,7 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
 import importlib.util
+import pygame
 
 class MenuScreen:
     def __init__(self, master, go_back_callback):
@@ -20,6 +21,10 @@ class MenuScreen:
         self.canvas = tk.Canvas(self.master, width=800, height=800)
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
+
+        # تهيئة الصوت
+        pygame.mixer.init()
+        self.button_sound = pygame.mixer.Sound(os.path.join("assets", "music", "menu_button.mp3"))
 
         self.create_buttons()
 
@@ -102,7 +107,12 @@ class MenuScreen:
         self.canvas.create_window(center_x, start_y + 320, window=self.hanoi_button, width=200, height=50)
         self.canvas.create_window(center_x, start_y + 400, window=self.back_button, width=200, height=50)
 
+    def play_sound(self):
+        if self.button_sound:
+            self.button_sound.play()
+
     def select_option(self, option):
+        self.play_sound()
         if option == "Queue":
             spec = importlib.util.spec_from_file_location("queue_module", os.path.join("data_structure", "queue.py"))
             queue_module = importlib.util.module_from_spec(spec)
@@ -120,7 +130,13 @@ class MenuScreen:
             linked_list_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(linked_list_module)
             self.canvas.destroy()
-            linked_list_module.LinkedListApp(self.master, go_back_callback=self.go_back_callback)
+            linked_list_module.LinkedListGame(self.master, go_back_callback=self.go_back_callback)
+        elif option == "Circular Queue":
+            spec = importlib.util.spec_from_file_location("circular_queue_module", os.path.join("data_structure", "CircularQueue.py"))
+            circular_queue_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(circular_queue_module)
+            self.canvas.destroy()
+            circular_queue_module.CircularQueue(self.master, go_back_callback=self.go_back_callback)
         else:
             messagebox.showinfo("Selected", f"You selected: {option}")
 

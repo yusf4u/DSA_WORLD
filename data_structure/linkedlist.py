@@ -45,7 +45,7 @@ class LinkedList:
         return result
 
 
-class LinkedListApp:
+class LinkedListGame:
     def __init__(self, root, go_back_callback=None):
         self.ll = LinkedList()
         self.root = root
