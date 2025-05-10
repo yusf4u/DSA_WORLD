@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
+import pygame
+import os
 
 
 class Node:
@@ -50,6 +52,13 @@ class LinkedListGame:
         self.ll = LinkedList()
         self.root = root
         self.go_back_callback = go_back_callback
+        
+        # Initialize sound system
+        pygame.mixer.init()
+        self.insert_sound = pygame.mixer.Sound(os.path.join("assets", "music", "insert_button.mp3"))
+        self.delete_sound = pygame.mixer.Sound(os.path.join("assets", "music", "push_button.mp3"))
+        self.menu_sound = pygame.mixer.Sound(os.path.join("assets", "music", "menu_button.mp3"))
+
         self.root.title("Linked List Visualizer")
         self.root.geometry("800x800")
         self.root.configure(bg="#0a0a0a")
@@ -74,21 +83,15 @@ class LinkedListGame:
                               bg="#101020", fg="#FFFFFF", insertbackground="#00FFFF")
         self.entry.grid(row=0, column=1, padx=10)
 
-        def create_button(text, command, col):
-            return tk.Button(control_frame, text=text, command=command,
-                             font=("Consolas", 12, "bold"),
-                             bg="#101020", fg="#00FFFF",
-                             activebackground="#00FFFF", activeforeground="#000000",
-                             width=10, height=1, bd=2, relief=tk.RAISED,
-                             cursor="hand2").grid(row=1, column=col, padx=10, pady=10)
-
-        create_button("INSERT", self.insert, 0)
-        create_button("DELETE", self.delete, 1)
-        create_button("REFRESH", self.draw, 2)  # Fixed: Changed from self.refresh to self.draw
+        # Create buttons with sounds
+        self.create_button("INSERT", self.insert, self.insert_sound, 0, control_frame)
+        self.create_button("DELETE", self.delete, self.delete_sound, 1, control_frame)
+        self.create_button("REFRESH", self.refresh, self.insert_sound, 2, control_frame)
 
         # Back button
         if self.go_back_callback:
-            tk.Button(root, text="← BACK", command=self.go_back,
+            tk.Button(root, text="← BACK", 
+                      command=lambda: [self.menu_sound.play(), self.go_back()],
                       font=("Consolas", 12), bg="#440000", fg="#FFFFFF",
                       activebackground="#FF0000", activeforeground="#FFFFFF",
                       relief=tk.RAISED, bd=2, width=8, cursor="hand2"
@@ -106,6 +109,18 @@ class LinkedListGame:
                                 justify=tk.LEFT)
         instructions.pack()
 
+        # Initial draw
+        self.draw()
+
+    def create_button(self, text, command, sound, col, frame):
+        tk.Button(frame, text=text, 
+                 command=lambda: [sound.play(), command()],
+                 font=("Consolas", 12, "bold"),
+                 bg="#101020", fg="#00FFFF",
+                 activebackground="#00FFFF", activeforeground="#000000",
+                 width=10, height=1, bd=2, relief=tk.RAISED,
+                 cursor="hand2").grid(row=1, column=col, padx=10, pady=10)
+
     def insert(self):
         data = self.entry.get()
         if data:
@@ -121,6 +136,11 @@ class LinkedListGame:
             self.draw()
         else:
             messagebox.showinfo("Not Found", f"Value '{data}' not found in list.")
+
+    def refresh(self):
+        """Clears the linked list and redraws the canvas"""
+        self.ll.head = None
+        self.draw()
 
     def animate_insert(self):
         nodes = self.ll.to_list()

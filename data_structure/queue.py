@@ -1,11 +1,19 @@
 import tkinter as tk
 import time
+import pygame
+import os
 
 class QueueGame:
     def __init__(self, root, go_back_callback=None):
         self.root = root
-        self.master = root  # ✅ هذا السطر مضاف لضمان عمل العودة للقائمة
+        self.master = root
         self.go_back_callback = go_back_callback
+        
+        # Initialize sound system
+        pygame.mixer.init()
+        self.push_sound = pygame.mixer.Sound(os.path.join("assets", "music", "push_button.mp3"))
+        self.menu_sound = pygame.mixer.Sound(os.path.join("assets", "music", "menu_button.mp3"))
+
         self.root.title("Queue Game")
         self.root.geometry("800x800")
         self.root.resizable(False, False)
@@ -14,7 +22,8 @@ class QueueGame:
         self.canvas.pack(fill="both", expand=True)
 
         self.back_button = tk.Button(root, text="← Back", font=('Consolas', 12, "bold"),
-                                     bg="#313244", fg="white", command=self.back_to_menu)
+                                     bg="#313244", fg="white", 
+                                     command=lambda: [self.menu_sound.play(), self.back_to_menu()])
         self.canvas.create_window(60, 30, window=self.back_button)
 
         self.queue = []
@@ -26,11 +35,14 @@ class QueueGame:
         self.canvas.create_window(270, 600, window=self.entry)
 
         self.enqueue_button = tk.Button(root, text="Enqueue", font=('Consolas', 12, "bold"),
-                                        bg="#89b4fa", fg="black", command=self.enqueue)
+                                        bg="#89b4fa", fg="black", 
+                                        command=lambda: [self.push_sound.play(), self.enqueue()])
         self.canvas.create_window(430, 600, window=self.enqueue_button)
 
         self.dequeue_button = tk.Button(root, text="Dequeue", font=('Consolas', 12, "bold"),
-                                        bg="#f38ba8", fg="black", command=self.dequeue, state=tk.DISABLED)
+                                        bg="#f38ba8", fg="black", 
+                                        command=lambda: [self.push_sound.play(), self.dequeue()], 
+                                        state=tk.DISABLED)
         self.canvas.create_window(530, 600, window=self.dequeue_button)
 
         self.title_text = self.canvas.create_text(400, 80, text="QUEUE VISUALIZER",
@@ -126,11 +138,11 @@ class QueueGame:
         self.dequeue_button.config(state=tk.NORMAL if self.queue else tk.DISABLED)
 
     def back_to_menu(self):
-        # تنظيف الشاشة
+        # Clear the current screen
         for widget in self.master.winfo_children():
             widget.destroy()
 
-        # الرجوع للقائمة
+        # Return to menu
         if self.go_back_callback:
             from screens.menu import MenuScreen
             MenuScreen(self.master, self.go_back_callback)

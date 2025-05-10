@@ -2,11 +2,18 @@ import tkinter as tk
 from tkinter import messagebox
 import random
 import time
+import pygame
+import os
 
 class StackGame:
     def __init__(self, master, go_back_callback):
         self.master = master
         self.go_back_callback = go_back_callback
+
+        # Initialize sound system with two different sounds
+        pygame.mixer.init()
+        self.button_sound = pygame.mixer.Sound(os.path.join("assets", "music", "push_button.mp3"))
+        self.back_sound = pygame.mixer.Sound(os.path.join("assets", "music", "menu_button.mp3"))
 
         for widget in self.master.winfo_children():
             widget.destroy()
@@ -34,6 +41,14 @@ class StackGame:
         }
 
         self.create_ui()
+
+    def play_button_sound(self):
+        """Play the regular button click sound"""
+        self.button_sound.play()
+
+    def play_back_sound(self):
+        """Play the special back button sound"""
+        self.back_sound.play()
 
     def create_ui(self):
         self.main_frame = tk.Frame(self.master, bg=self.COLORS["black"])
@@ -101,7 +116,7 @@ class StackGame:
             fg=self.COLORS["white"],
             padx=20,
             pady=5,
-            command=self.push_item
+            command=lambda: [self.play_button_sound(), self.push_item()]
         )
         self.push_button.grid(row=0, column=0, padx=10)
 
@@ -113,7 +128,7 @@ class StackGame:
             fg=self.COLORS["white"],
             padx=20,
             pady=5,
-            command=self.pop_item
+            command=lambda: [self.play_button_sound(), self.pop_item()]
         )
         self.pop_button.grid(row=0, column=1, padx=10)
 
@@ -125,7 +140,7 @@ class StackGame:
             fg=self.COLORS["white"],
             padx=20,
             pady=5,
-            command=self.reset_stack
+            command=lambda: [self.play_button_sound(), self.reset_stack()]
         )
         self.reset_button.grid(row=0, column=2, padx=10)
 
@@ -137,7 +152,7 @@ class StackGame:
             fg=self.COLORS["white"],
             padx=20,
             pady=5,
-            command=self.go_back
+            command=lambda: [self.play_back_sound(), self.go_back()]
         )
         self.back_button.pack(pady=20)
 

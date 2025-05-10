@@ -5,6 +5,13 @@ import os
 import importlib.util
 import pygame
 
+import tkinter as tk
+from tkinter import messagebox
+from PIL import Image, ImageTk
+import os
+import importlib.util
+import pygame
+
 class MenuScreen:
     def __init__(self, master, go_back_callback):
         self.master = master
@@ -13,7 +20,7 @@ class MenuScreen:
         self.master.geometry("800x800")
         self.master.resizable(False, False)
 
-        # تحميل الخلفية
+        # Load background
         bg_path = os.path.join("assets", "background", "menu_bg.png")
         bg_image = Image.open(bg_path).resize((800, 800), Image.Resampling.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
@@ -22,13 +29,12 @@ class MenuScreen:
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
 
-        # تهيئة الصوت
-        pygame.mixer.init()
+        # Initialize button sound
         self.button_sound = pygame.mixer.Sound(os.path.join("assets", "music", "menu_button.mp3"))
 
         self.create_buttons()
 
-        # زر العودة للصفحة الرئيسية (أعلى اليسار)
+        # Back to home button (top left)
         self.top_back_button = tk.Button(
             self.master,
             text="← Back",
@@ -42,7 +48,7 @@ class MenuScreen:
     def create_buttons(self):
         button_font = ("Pixel", 20, "bold")
 
-        # الأزرار
+        # Buttons
         self.stack_button = tk.Button(
             self.master,
             text="Stack",
@@ -112,7 +118,8 @@ class MenuScreen:
             self.button_sound.play()
 
     def select_option(self, option):
-        self.play_sound()
+        self.play_sound()  # Play button sound when selecting an option
+
         if option == "Queue":
             spec = importlib.util.spec_from_file_location("queue_module", os.path.join("data_structure", "queue.py"))
             queue_module = importlib.util.module_from_spec(spec)
@@ -137,9 +144,14 @@ class MenuScreen:
             spec.loader.exec_module(circular_queue_module)
             self.canvas.destroy()
             circular_queue_module.CircularQueue(self.master, go_back_callback=self.go_back_callback)
-        else:
-            messagebox.showinfo("Selected", f"You selected: {option}")
+        elif option == "Hanoi Tower":
+            spec = importlib.util.spec_from_file_location("hanoi_module", os.path.join("data_structure", "HanoiTower.py"))
+            hanoi_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(hanoi_module)
+            self.canvas.destroy()
+            hanoi_module.TowerOfHanoiApp(self.master, go_back_callback=self.go_back_callback)
 
     def go_to_home(self):
+        self.play_sound()  # Play button sound when going back
         self.canvas.destroy()
         self.go_back_callback(self.master)

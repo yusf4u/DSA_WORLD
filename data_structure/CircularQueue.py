@@ -3,11 +3,19 @@ from tkinter import messagebox, ttk
 import math
 import random
 import time
+import pygame
+import os
 
 class CircularQueue:
     def __init__(self, root, go_back_callback=None):
         self.root = root
         self.go_back_callback = go_back_callback
+        
+        # Initialize sound system
+        pygame.mixer.init()
+        self.push_sound = pygame.mixer.Sound(os.path.join("assets", "music", "push_button.mp3"))
+        self.menu_sound = pygame.mixer.Sound(os.path.join("assets", "music", "menu_button.mp3"))
+
         self.root.title("Circular Queue Visualizer")
         self.root.geometry("800x800")
         self.root.resizable(False, False)
@@ -149,12 +157,12 @@ class CircularQueue:
             padding=10
         )
         
-        # Operation buttons
+        # Operation buttons with sound
         buttons = [
-            ("ENQUEUE", self.enqueue),
-            ("DEQUEUE", self.dequeue),
-            ("RESET", self.reset),
-            ("RANDOM FILL", self.random_fill)
+            ("ENQUEUE", lambda: [self.push_sound.play(), self.enqueue()]),
+            ("DEQUEUE", lambda: [self.push_sound.play(), self.dequeue()]),
+            ("RESET", lambda: [self.push_sound.play(), self.reset()]),
+            ("RANDOM FILL", lambda: [self.push_sound.play(), self.random_fill()])
         ]
         
         for text, command in buttons:
@@ -166,7 +174,8 @@ class CircularQueue:
             )
             btn.pack(side=tk.LEFT, padx=10, expand=True)
             
-            self.back_button = tk.Button(
+        # Back button with menu sound
+        self.back_button = tk.Button(
             self.content_frame,
             text="Back to Menu",
             font=("Courier", 14, "bold"),
@@ -174,7 +183,7 @@ class CircularQueue:
             fg="#ffffff",
             padx=20,
             pady=5,
-            command=self.go_back
+            command=lambda: [self.menu_sound.play(), self.go_back()]
         )
         self.back_button.pack(pady=20)
         
@@ -385,5 +394,3 @@ def main():
     app = CircularQueue(root)
     root.mainloop()
 
-if __name__ == "__main__":
-    main()
